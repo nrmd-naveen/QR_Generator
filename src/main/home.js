@@ -1,7 +1,6 @@
 import { getUserDetailsApi } from "../user/services/api";
 import { isAuthenticated } from "../user/services/authenticate";
 import { Navigate } from "react-router-dom";
-import { getIdToken, setIdToken } from "../user/services/localStorage";
 import { useEffect,useState } from "react";
 import Loader from "../user/assets/loader";
 
