@@ -2,8 +2,8 @@ import './register.css';
 import { useEffect, useState } from 'react';
 import Loader from '../assets/loader';
 import { registerApi } from '../services/api';
-import { setIdToken } from '../services/localStorage';
-import { Link, Navigate } from 'react-router-dom';
+import { setRegIdToken } from '../services/localStorage';
+import { Link, useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authenticate';
 
 function Register() {
@@ -17,6 +17,7 @@ function Register() {
         name:{required:false},
         customError:null
     }
+    const navigate = useNavigate();     
     const [err,setErr] = useState(initialStateErrors);
     const [loading,setLoading] = useState(false);
     const [input,setInput] = useState({
@@ -61,13 +62,14 @@ function Register() {
         if(!hasErr){
             setLoading(true);
             registerApi(input).then((response)=>{
-                console.log("Register Response",response);
-                setIdToken(response.data);
+                console.log("Register Response --- ",response);
+                setRegIdToken(response.data);
+                navigate('/');
             }).catch((er) =>{
                 console.log('Register Error',er.response.data.error.message);
                 throwErr(er.response.data.error.message);
             }).finally(()=>{
-                setLoading(false)
+                setLoading(false);
             })
         }
 
@@ -79,9 +81,15 @@ function Register() {
         setInput({...input,[e.target.name]:e.target.value});
     }
 
-    if (isAuthenticated()) {
-        return <Navigate to='/' />
-    }
+    useEffect(() => {
+        isAuthenticated().then(Auth => {
+            if(Auth){
+                navigate('/');
+            }
+        })
+      }, [navigate]);
+
+    
 
     return (
         <div className="regpage">

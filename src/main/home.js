@@ -1,6 +1,5 @@
-import { getUserDetailsApi } from "../user/services/api";
 import { isAuthenticated } from "../user/services/authenticate";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import Loader from "../user/assets/loader";
 
@@ -23,7 +22,7 @@ const Home = ()=>{
     useEffect(() => {
         document.title = "Home Page";  
       }, []);
-
+/* 
     const [user,setUser] = useState({
         name:"",
         email:"",
@@ -46,6 +45,8 @@ const Home = ()=>{
             console.log("Error in Getting User Details ", er.response.data.error.message);
         })
     },[])
+    
+*/
     const [image,setImage] = useState(true);
     const [REF_URL,setREF_URL] = useState("www.linkedin.com/in/nrmd-naveen");
     const [QR_URL,setQR_URL] = useState("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=www.linkedin.com/in/nrmd-naveen")
@@ -84,9 +85,64 @@ const Home = ()=>{
         console.log(err)
     })
     }
-    */
+    
 
-    if (isAuthenticated()){
+    const short = () =>{
+        const sURL = "https://ulvis.net/api/write/post";
+        const targetURL = "www.linkedin.com/in/nrmd-naveen";
+    
+        let res = axios.post(sURL,{url:targetURL})
+        res.then((r)=>{
+            console.log(res)
+        }).catch((e)=>{
+            console.log(e)
+        })
+    }
+*/
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    isAuthenticated().then((Auth) => {
+      if (!Auth) {
+        navigate('/login'); // Redirect to '/home'
+      }
+    });
+  }, [navigate]);
+
+  return (
+    <div style={{textAlign:"center", padding:"15px"}}>
+        {!image?
+        <div style={{textAlign:"center", margin:"0 25% 0 25%",marginBottom:"15px"}}>
+            {isLoading ?<Loader />:null}
+            <img src={QR_URL} onLoad={handleImageLoad} style={{ display: isLoading ? 'none' : 'block' }} alt="QR_Image"/>
+        </div>
+        :
+        <div>
+            <input type="text" placeholder="URL Here" onChange={handleUrl} style={{borderBottom:"2px solid grey", borderRadius:"0px"}} />
+        </div>
+        }
+        <button style={buttonStyle} onClick={()=>{
+            getQR();
+            changeButText();
+            setImage(!image);
+        }} >{butText}</button>
+        
+    </div>
+    
+)
+
+/*    
+    return(
+        <div>
+            <input type="text" placeholder="URL Here" onChange={handleUrl} style={{borderBottom:"2px solid grey", borderRadius:"0px"}} />
+            <button style={buttonStyle} onClick={short} >ShorternURL</button>
+        </div>
+    )
+*/    
+    
+}
+
+        /*
         let ContentLoaded = user.email?true:false;
         if (ContentLoaded){
             return (
@@ -122,10 +178,7 @@ const Home = ()=>{
                 </div>
             
         )}
+    */
     
-    }
-    return <Navigate to='/login'/>
-    
-}
 
 export default Home;

@@ -2,9 +2,9 @@ import './login.css';
 import { useEffect, useState } from 'react';
 import Loader from '../assets/loader';
 import { loginApi } from '../services/api';
-import { setIdToken } from '../services/localStorage';
+import { setLoginIdToken } from '../services/localStorage';
 import { isAuthenticated } from '../services/authenticate';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     useEffect(() => {
@@ -16,6 +16,7 @@ function Login() {
         password:{required:false},
         customError:null
     }
+    const navigate = useNavigate();   
     const [err,setErr] = useState(initialStateErrors);
     const [loading,setLoading] = useState(false);
     const [input,setInput] = useState({
@@ -61,7 +62,7 @@ function Login() {
             setLoading(true);
             loginApi(input).then((response)=>{
                 console.log("Login Response ",response);
-                setIdToken(response.data.idToken);
+                setLoginIdToken(response.data.idToken);
             }).catch((er) =>{
                 console.log("Login Error ", er.response.data.error.message);
                 throwErr(er.response.data.error.message);
@@ -72,13 +73,14 @@ function Login() {
 
         setErr({...err});
     } 
-
+    useEffect(() => {
+        isAuthenticated().then(Auth => {
+            if(Auth){
+                navigate('/');
+            }
+        })
+      }, [navigate,loading]);
     
-    console.log("isAuth",isAuthenticated())
-
-    if(isAuthenticated()){
-        return <Navigate to='/' />
-    }
 
     return (
         <div className="reg-page">
