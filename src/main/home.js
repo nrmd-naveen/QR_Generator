@@ -100,15 +100,25 @@ const Home = ()=>{
     }
 */
     const navigate = useNavigate();
-
+    const [pageLoader , setPageLoader] = useState(false);
   useEffect(() => {
+    setPageLoader(true);
     isAuthenticated().then((Auth) => {
       if (!Auth) {
-        navigate('/login'); // Redirect to '/home'
+        setPageLoader(false);
+        navigate('/login'); // Redirect to '/login'
       }
     });
   }, [navigate]);
-
+  if (pageLoader){
+    return(
+        <div>
+                <div className='loading'>
+                    <Loader />
+                </div>
+        </div>
+    )
+  }
   return (
     <div style={{textAlign:"center", padding:"15px"}}>
         {!image?
