@@ -6,21 +6,7 @@ import Loader from "../user/assets/loader";
 
 
 const Home = ()=>{
-    const buttonStyle ={
-        fontFamily: "poppins",
-        fontSize: "medium",
-        backgroundColor: "rgb(38, 113, 225)",
-        borderRadius: "25px",
-        borderStyle: "none",
-        height: "auto",
-        display:"inline-block",
-        width:"fit-content",
-        marginTop: "40px",
-        cursor: "pointer",
-        color: "rgb(255, 255, 255)",
-        padding: "10px 20px",
-        textWrapping:"no-wrap"
-    }
+    
     useEffect(() => {
         document.title = "Home Page";  
       }, []);
