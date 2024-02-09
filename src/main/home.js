@@ -6,7 +6,7 @@ import Loader from "../user/assets/loader";
 
 
 const Home = ()=>{
-    
+
     useEffect(() => {
         document.title = "Home Page";  
       }, []);
@@ -91,7 +91,7 @@ const Home = ()=>{
     }
 */
     const navigate = useNavigate();
-    const [pageLoader , setPageLoader] = useState(false);
+    const [pageLoader , setPageLoader] = useState(true);
   useEffect(() => {
     setPageLoader(true);
     isAuthenticated().then((Auth) => {
