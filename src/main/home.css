@@ -1,0 +1,44 @@
+
+.outerContainer{
+    height: 70vh;
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(91, 91, 91, 0.121);
+    border-radius: 10px;
+}
+.heading{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: large;
+
+}
+.inputBox{
+    border-bottom: 2px solid grey;
+    border-radius:0px;
+    background-color: transparent;
+}
+
+.buttonStyle{
+    font-family: poppins;
+    font-size: medium;
+    background-color: rgb(38, 113, 225);
+    border-radius: 25px;
+    border-style: none;
+    height: 40px;
+    width:50%;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.outerContainer div{
+
+}

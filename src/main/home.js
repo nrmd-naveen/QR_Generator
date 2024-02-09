@@ -1,7 +1,9 @@
+import './home.css';
 import { isAuthenticated } from "../user/services/authenticate";
 import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import Loader from "../user/assets/loader";
+
 
 const Home = ()=>{
     const buttonStyle ={
@@ -47,7 +49,7 @@ const Home = ()=>{
     },[])
     
 */
-    const [image,setImage] = useState(true);
+    const [image,setImage] = useState(false);
     const [REF_URL,setREF_URL] = useState("www.linkedin.com/in/nrmd-naveen");
     const [QR_URL,setQR_URL] = useState("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=www.linkedin.com/in/nrmd-naveen")
     const getQR = () =>{
@@ -61,17 +63,20 @@ const Home = ()=>{
     const handleUrl = (e) =>{
         setREF_URL(e.target.value);
     }
-    const [isLoading, setIsLoading] = useState(true);
+    const [Loading, setLoading] = useState(true);
     const handleImageLoad = () => {
-        setIsLoading(false);
+        console.log("Loaded . . . .")
+       // setLoading(false);
       };
     const [butText,setButText] = useState('Get QR');
     const changeButText = () =>{
         if(butText === "Get QR"){
+            setTimeout( function() { setLoading(false); }, 1500)
             setButText("ChangeURL");
+           // setLoading(false);
         }else{
             setButText("Get QR");
-            setIsLoading(!isLoading);
+            setLoading(true);
         }
     }
         
@@ -108,6 +113,7 @@ const Home = ()=>{
         setPageLoader(false);
         navigate('/login'); // Redirect to '/login'
       }
+      setPageLoader(false);
     });
   }, [navigate]);
   if (pageLoader){
@@ -119,12 +125,39 @@ const Home = ()=>{
         </div>
     )
   }
+
+return(
+    <div className='outerContainer'>
+        <div>
+            <h1 className='heading'>QR Code Generator</h1>
+        </div>
+        
+        {!image ? 
+            (<div>
+                <input type="text" placeholder="URL Here" onChange={handleUrl} className='inputBox' />
+            </div>):
+            (<div className='imageContainer'>
+                    {Loading ?<Loader />:<img src={QR_URL} onLoad={handleImageLoad} alt="QR_Image"/>}
+            </div>)
+        }
+        
+        <div>
+            <buton className='buttonStyle' onClick={()=>{
+                        getQR();
+                        changeButText();
+                        setImage(!image);
+                    }}>{butText}</buton>
+        </div>
+    </div>
+)
+
+/*  
   return (
-    <div style={{textAlign:"center", padding:"15px"}}>
+    <div className="outerContainer">
         {!image?
         <div style={{textAlign:"center", margin:"0 25% 0 25%",marginBottom:"15px"}}>
-            {isLoading ?<Loader />:null}
-            <img src={QR_URL} onLoad={handleImageLoad} style={{ display: isLoading ? 'none' : 'block' }} alt="QR_Image"/>
+            {Loading ?<Loader />:null}
+            <img src={QR_URL} onLoad={handleImageLoad} style={{ display: Loading ? 'none' : 'block' }} alt="QR_Image"/>
         </div>
         :
         <div>
@@ -140,8 +173,8 @@ const Home = ()=>{
     </div>
     
 )
-
-/*    
+ 
+ ------------------------------------------------ 
     return(
         <div>
             <input type="text" placeholder="URL Here" onChange={handleUrl} style={{borderBottom:"2px solid grey", borderRadius:"0px"}} />
@@ -159,8 +192,8 @@ const Home = ()=>{
                 <div style={{textAlign:"center", padding:"15px"}}>
                     {!image?
                     <div style={{textAlign:"center", margin:"0 25% 0 25%",marginBottom:"15px"}}>
-                        {isLoading ?<Loader />:null}
-                        <img src={QR_URL} onLoad={handleImageLoad} style={{ display: isLoading ? 'none' : 'block' }} alt="QR_Image"/>
+                        {Loading ?<Loader />:null}
+                        <img src={QR_URL} onLoad={handleImageLoad} style={{ display: Loading ? 'none' : 'block' }} alt="QR_Image"/>
                     </div>
                     :
                     <div>
