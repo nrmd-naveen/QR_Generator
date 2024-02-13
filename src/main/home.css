@@ -1,6 +1,6 @@
 
 .outerContainer{
-    height: 70vh;
+    height: 75vh;
     width: 300px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -14,7 +14,8 @@
 .heading{
     font-family: poppins;
     font-weight: 600;
-    font-size: large;
+    font-size: larger;
+    text-decoration: underline 3px rgba(0, 102, 255, 0.333) ;
 
 }
 .inputBox{
@@ -24,6 +25,7 @@
 }
 
 .saveButtonStyle{
+    display: block;
     font-family: poppins;
     font-size: medium;
     background-color: rgb(0, 0, 0);
@@ -36,10 +38,11 @@
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 7px;
-    margin-top: 25px;
     padding-bottom: 10px;
+    text-decoration: none;
 }
 .buttonStyle{
+    text-align: center;
     font-family: poppins;
     font-size: medium;
     background-color: rgb(38, 113, 225);
@@ -53,12 +56,20 @@
     padding-right: 25px;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-top: 20px;
 }
-.qrBlock{
+
+.btnContainer{
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.outerContainer div{
 
+.btnContainer a{
+    text-decoration: none;
 }
+
+.QRimage{
+    margin:"50px";
+    box-shadow: rgba(0, 0, 0, 0.12) 5px 5px 5px, rgba(0, 0, 0, 0.24) 5px 5px 5px;}
